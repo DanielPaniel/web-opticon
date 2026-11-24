@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A cutting edge panopticon for the modern web</title>
+
+        <style>
+            @font-face {
+                font-family: 'Rasa';
+                font-weight: 100-900;
+                font-style: normal;
+                src: url(Rasa-VariableFont_wght.ttf) format('truetype');
+            }
+            @font-face {
+                font-family: 'Lexend Deca';
+                font-weight: 100-900;
+                font-style: normal;
+                src: url(LexendDeca-VariableFont_wght.ttf) format('truetype');
+            }
+            :root {
+                color-scheme: light dark;
+
+                --light: light-dark(rgb(222, 255, 152), rgb(196, 255, 69));
+                --dark: rgb(25, 23, 28);
+
+                --background: light-dark(var(--light), var(--dark));
+                --foreground: light-dark(var(--dark), var(--light));
+                --background-fade: light-dark(oklch(from #fff l c h / 25%), oklch(from var(--foreground) l c h / 5%));
+
+                --wo-eye-color-pupil: light-dark(black, red);
+                --wo-eye-color-iris: light-dark(red, black);
+                --wo-eye-color-body: light-dark(white, gray);
+                --wo-eye-color-lids: light-dark(gray, #575757);
+
+
+                --label: "Local attention";
+                --label-background: var(--foreground);
+                --label-color: var(--background);
+                &:has(.example [isglobal]) {
+                    --label: "Global attention";
+                    --label-background: var(--background);
+                    --label-color: var(--foreground);
+                }
+                --demo-size: 4rem;
+            }
+
+            body {
+                font-family: 'Rasa', 'Georgia', serif;
+                font-size: 1.3em;
+                min-block-size: 100vh;
+                box-sizing: border-box;
+                background-color: var(--background);
+                background-image: linear-gradient(to right, 
+                    var(--background-fade) 0%,
+                    transparent min(20%, 5rem),
+                    transparent calc(100% - min(20%, 5rem)), 
+                    var(--background-fade) 100%);
+                color: var(--foreground);
+                padding-block: 2em;
+                margin: 0;
+            }
+
+            section > *,
+            main > div {
+                margin-inline: clamp(.66rem, 5vw, 4rem);
+            }
+            section {
+                & h1, & h2, & h3 {
+                    margin-inline: 0;
+                    padding-inline: clamp(.66rem, 5vw, 4rem);
+                    margin-block: 2.5rem 1em;
+                }
+            }
+            h1 {
+                position: sticky;
+                top: 0;
+                margin-block-start: 0;
+                font-size: clamp(2.5rem, 10vmin, 5rem);
+                text-align: center;
+                text-shadow: .15em .05em var(--foreground), -.05em -.05em var(--background);
+                display: flex;
+                gap: .5ch;
+                align-items: center;
+                justify-content: center;
+
+                web-opticon {
+                    font-size: 1.25em;
+                }
+            }
+
+            h1, h2, h3 {
+                font-family: 'Lexend Deca', sans-serif;
+                font-weight: 800;
+                font-style: italic;
+                color: var(--background);
+                background-color: var(--foreground);
+            }
+            textarea {
+                display: block;
+            }
+            textarea {
+                inline-size: 50ch;
+                block-size: 7lh;
+                padding: .66em;
+
+                & + * {
+                    margin-block-start: 1em;
+                }
+            }
+            button {
+                background: var(--foreground);
+                border: .15rem solid var(--foreground);
+                border-radius: .25em;
+                color: var(--background);
+                font-family: 'Lexend Deca', sans-serif;
+                font-weight: 600;
+                font-size: 1rem;
+                padding: .4em .66em;
+                cursor: pointer;
+
+                &:hover {
+                    background: transparent;
+                    color: var(--foreground);
+                }
+            }
+
+            legend {
+                font-family: 'Lexend Deca', sans-serif;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+            label {
+                font-family: 'Lexend Deca', sans-serif;
+                font-size: 1rem;
+                font-weight: 400;
+            }
+            
+            .example {
+                border: .15rem dashed var(--foreground);
+                min-inline-size: 50vw;
+                min-block-size: 10rem;
+                padding: .5em;
+
+                web-opticon {
+                    font-size: var(--demo-size);
+                    position: relative;
+                    z-index: -1;
+                }
+            }
+            .colors {
+                list-style: none;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1em;
+
+                li {
+                    display: flex;
+                    flex-flow: column;
+                    text-align: center;
+                    gap: .25em;
+                }
+
+                input[type=color] {
+                    block-size: 5em;
+                    inline-size: 5em;
+                }
+            }
+            .flex {
+                display: flex;
+                flex-wrap: wrap;
+                gap: .25em;
+            }
+            
+        </style>
+
+
+    </head>
+    <body>
+        <main>
+            <h1>Web-opticon <web-opticon eyes="1" isglobal></web-opticon></h1>
+            <div>
+                <p>Modern surveillance for websites.</p>
+                <p>A cutting-edge panopticon gets the prefered behavior by visitors on your website.</p>
+            </div>
+            <section>
+                <h2>Hypotethical testimonies</h2>
+                <ul>
+                    <li>Are they watching?</li>
+                    <li>Can they see you for real?</li>
+                    <li>Are they recording this?</li>
+                </ul>
+                <p>No way to be sure! Better behave!</p>
+            </section>
+            <section>
+                <h2>Demo</h2>
+                <p>A custom component that follows visitors around.</p>
+                <div class="example">
+                    <web-opticon id="eyes" eyes="1"></web-opticon>                
+                </div>
+            </section>
+
+            <section>
+                <h3>Demo settings</h3>
+
+                <div class="flex">
+                    <fieldset>
+                        <legend>Set number of eyes</legend>
+                        <button onclick="addEye();">Add</button>
+                    </fieldset>
+
+                    <fieldset onchange="setAttention(event.target.id);">
+                        <legend>Set attention span</legend>
+
+                        <p>Set eyes to follow cursor within its closest parent element, or in the entire document.<br>
+                            When no cursor is detected they will patrol on their own.
+                        </p>
+
+                        <input checked id="attention-local" name="attention-type" type="radio" /> <label for="attention-local">Local attention</label>
+                        <input id="attention-global" name="attention-type" type="radio" /> <label for="attention-global">Global attention</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Customize colors</legend>
+                        <ul class="colors">
+                            <li>
+                                <input type="color" id="pupil" value="#f00" oninput="changeProp('pupil')">
+                                <label for="pupil">Pupil</label>
+                            </li>
+                            <li>
+                                <input type="color" id="iris" value="#000" oninput="changeProp('iris')">
+                                <label for="iris">Iris</label>
+                            </li>
+                            <li>
+                                <input type="color" id="body" value="#fff" oninput="changeProp('body')">
+                                <label for="body">Body</label>
+                            </li>
+                            <li>
+                                <input type="color" id="lids" value="#808080" oninput="changeProp('lids')">
+                                <label for="lids">Lids</label>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+            </section>
+
+            <section>
+                <h2>Example</h2>
+                <div class="flex">
+                    <div>
+                        <label for="example-html">HTML-file:</label>
+                        <textarea id="example-html" class="box">
+<web-opticon eyes="2" isglobal></web-opticon>
+<script src="webOpticon.js"></script></textarea>
+                    </div>
+                    <div>
+                        <label for="example-css">CSS customization:</label>
+                        <textarea id="example-css" class="box">
+font-size: 3rem; /* sets eye-size */
+--wo-eye-color-pupil: #f00;
+--wo-eye-color-iris: #000;
+--wo-eye-color-body: #fff;
+--wo-eye-color-lids: #808080;</textarea>
+                    </div>
+                </div>
+                <p>
+                    <a href="webOpticon.js">Download webOpticon.js</a>
+                </p>
+            </section>
+
+        </main>
+
+        <script>
+            function addEye(nbr) {
+                document.querySelector('#eyes').eyes++;
+            }
+            function setAttention(id) {
+                let element = document.querySelector('#eyes');
+                element.isglobal = id === "attention-global" ? true : false;
+            }
+            function changeProp(propName) {
+                let value = document.querySelector(`#${propName}`).value;
+                document.querySelector('#eyes').style.setProperty("--wo-eye-color-"+propName, value);
+            }
+        </script>
+        <script src="webOpticon.js"></script>
+    </body>
+</html>
